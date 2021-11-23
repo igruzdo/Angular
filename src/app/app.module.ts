@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import {ProdCardModule} from "./prod-card/prod-card.module";
+import {DropDownModule} from "./drop-down/drop-down.module";
 
 @NgModule({
   declarations: [
@@ -10,7 +11,7 @@ import {ProdCardModule} from "./prod-card/prod-card.module";
   ],
   imports: [
     BrowserModule,
-    ProdCardModule
+    DropDownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
