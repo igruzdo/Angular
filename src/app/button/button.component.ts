@@ -7,7 +7,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
             [class.active] = "isActive"
             [style.width]="newSize"
             [attr.disabled] = "isDisabled? '': null"
-    >Dropdown button</button>
+    >{{text}}</button>
   `,
   styles: [`
     button {
@@ -28,6 +28,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
   ]
 })
 export class ButtonComponent implements OnInit, OnChanges{
+  @Input() text: string = 'Dropdown button';
   @Input() color: any;
   @Input() size: any;
   @Input() isActive = false;
