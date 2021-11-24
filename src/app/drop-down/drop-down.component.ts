@@ -3,18 +3,25 @@ import {Component, Input, OnInit} from '@angular/core';
 @Component({
   selector: 'app-drop-down',
   template: `
-    <div>
+    <div class="dropdown">
       <app-button color="default" size="default" (click)="isShowToggleClick()" (mouseover)="isShowToggleHover()"></app-button>
-      <app-menu [isOpen]="isShow"></app-menu>
+      <div *ngIf='isShow' class="menu-wrapper">
+        <app-menu ></app-menu>
+      </div>
     </div>
   `,
   styles: [
-    `div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 300px;
-    }`
+    `
+    .dropdown {
+      position: relative;
+    }
+    .menu-wrapper {
+      position: absolute;
+      margin-top: 1px;
+      padding: 8x;
+      border-radius: 10px;
+    }
+    `
   ]
 })
 export class DropDownComponent implements OnInit {

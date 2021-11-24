@@ -3,7 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 @Component({
   selector: 'app-menu',
   template: `
-    <div [ngClass]="{'menu_hidden':!isOpen}">
+    <div >
       <p>Dropdown options one</p>
       <p>Dropdown options two</p>
       <p>Dropdown options three</p>
@@ -25,7 +25,6 @@ import {Component, Input, OnInit} from '@angular/core';
       width: 206px;
       transition: all 0.2s ease;
       position: relative;
-      z-index: -1;
     }
     p {
       font-family: Inter;
