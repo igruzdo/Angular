@@ -4,9 +4,7 @@ import {Component, Input, OnInit} from '@angular/core';
   selector: 'app-menu',
   template: `
     <div >
-      <p>Dropdown options one</p>
-      <p>Dropdown options two</p>
-      <p>Dropdown options three</p>
+      <p>Dropdown option</p>
     </div>
   `,
   styles: [`
@@ -39,7 +37,7 @@ import {Component, Input, OnInit} from '@angular/core';
       transition: all 0.2s ease;
     }
     .menu_hidden_hover:hover {
-      opacity: 0;
+      opacity: 1;
       visibility: hidden;
       transform: translateY(-200px);
       transition: all 0.2s ease;

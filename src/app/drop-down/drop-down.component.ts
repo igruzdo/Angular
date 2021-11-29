@@ -6,7 +6,7 @@ import {Component, HostListener, Input, OnInit} from '@angular/core';
     <div class="dropdown">
       <app-button color="default" size="default" (click)="isShowToggleClick()" ></app-button>
       <div *ngIf='isShow' class="menu-wrapper">
-        <app-menu ></app-menu>
+        <app-menu></app-menu>
       </div>
     </div>
   `,
@@ -19,7 +19,7 @@ import {Component, HostListener, Input, OnInit} from '@angular/core';
     .menu-wrapper {
       position: absolute;
       margin-top: 1px;
-      padding: 8x;
+      padding: 8px;
       border-radius: 10px;
     }
     `
@@ -35,11 +35,6 @@ export class DropDownComponent implements OnInit {
   }
   isShowToggleClick() {
     if(this.trigger === 'click'){
-      this.isShow = !this.isShow;
-    }
-  }
-  isShowToggleHover() {
-    if(this.trigger === 'hover'){
       this.isShow = !this.isShow;
     }
   }

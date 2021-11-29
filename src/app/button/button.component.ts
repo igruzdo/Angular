@@ -5,8 +5,13 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
   template: `
     <button [style.background-color]="newColor"
             [class.active] = "isActive"
+            [class.default]="isDefault"
+            [class.large]="isLarge"
+            [class.small]="isSmall"
             [style.width]="newSize"
             [attr.disabled] = "isDisabled? '': null"
+            [attr.value]="buttonValue"
+            *ngIf="buttonValue"
     >{{text}}</button>
   `,
   styles: [`
@@ -17,13 +22,23 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
       font-family: Inter;
       font-weight: 400;
       font-size: 14px;
-      width: 170px;
       cursor: pointer;
       color: #FFF;
     }
     .active{
       font-weight: 600;
       box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2), 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
+    .default{
+      width: 170px;
+    }
+    .large {
+      padding: 15px 25px;
+      font-size: 16px;
+    }
+    .small {
+      padding: 5px 10px;
+      font-size: 12px;
     }`
   ]
 })
@@ -33,17 +48,36 @@ export class ButtonComponent implements OnInit, OnChanges{
   @Input() size: any;
   @Input() isActive = false;
   @Input() isDisabled = false;
+  @Input() buttonValue: string = 'defaultValue';
 
   newColor: any;
   newSize: any;
+  isDefault: boolean = true;
+  isLarge: boolean = false;
+  isSmall: boolean = false;
 
   ngOnChanges() {
     if(this.color) {
       this.newColor = this.colors[this.color]
     }
-    if(this.size) {
-      this.newSize = this.sizes[this.size]
+    switch (this.size){
+      case 'default':
+        this.isDefault = true;
+        this.isLarge = false;
+        this.isSmall = false;
+        break;
+      case 'large':
+        this.isDefault = false;
+        this.isLarge = true;
+        this.isSmall = false;
+        break;
+      case 'small':
+        this.isDefault = false;
+        this.isLarge = false;
+        this.isSmall = true;
+        break;
     }
+
   }
 
   public colors: {[index: string]:string} = {
@@ -62,5 +96,4 @@ export class ButtonComponent implements OnInit, OnChanges{
 
   constructor() {  }
   ngOnInit() {  }
-
 }

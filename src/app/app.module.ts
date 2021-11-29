@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import {ProdCardModule} from "./prod-card/prod-card.module";
 import {DropDownModule} from "./drop-down/drop-down.module";
+import {CatalogModule} from "./catalog/catalog.module";
 
 @NgModule({
   declarations: [
@@ -11,7 +11,8 @@ import {DropDownModule} from "./drop-down/drop-down.module";
   ],
   imports: [
     BrowserModule,
-    DropDownModule
+    DropDownModule,
+    CatalogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
