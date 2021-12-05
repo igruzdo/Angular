@@ -2,3 +2,8 @@
 body {
   font-family: Inter sans-serif;
 }
+
+@import './app/theme/colors.scss';
+@import './app/basket/basket.theme.component.scss';
+
+@include theme-basket($app-colors);

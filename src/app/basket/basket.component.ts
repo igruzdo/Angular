@@ -67,7 +67,6 @@ import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@ang
         height: 20px;
         border-radius: 10px;
         border: 2px solid rgba(59, 101, 255, .1);
-        background-color: #82f69d;
         font-family: Inter;
         font-size: 14px;
         cursor: pointer;
