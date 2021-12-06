@@ -32,7 +32,7 @@ export const items = [
     {
       id: 4,
       name: "Apple",
-      model: " Iphone 12 pro 128",
+      model: "Iphone 12 pro 128",
       cost: 99417,
       code: "rub",
       available: true,

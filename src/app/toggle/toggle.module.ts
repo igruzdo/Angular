@@ -4,15 +4,15 @@ import { ToggleComponent } from './toggle.component';
 import {ButtonModule} from "../button/button.module";
 
 
-
 @NgModule({
   declarations: [
     ToggleComponent
   ],
   imports: [
     CommonModule,
-    ButtonModule
-  ], exports: [
+    ButtonModule,
+  ],
+  exports: [
     ToggleComponent
   ]
 })

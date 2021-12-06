@@ -5,7 +5,11 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
   selector: 'app-prod-card',
   template: `
     <div class="prodcard">
-      <img class="prodcard-img" src="{{ src }}" alt="prodimg">
+      <img class="prodcard-img"
+           src="{{ src }}"
+           alt="prodimg"
+           [routerLink]="['/catalog/product', id]"
+           [queryParams]="{id: id}">
       <a class="prodcard-href" href="#">{{ name }}</a>
       <h3 class="prodcard-model">{{ model }}</h3>
       <span class="prodcard-cost">{{cost | currency: 'RUB':'symbol-narrow':'3.0': 'ru'}}</span>
@@ -16,7 +20,7 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
     .prodcard {
       display: flex;
       flex-direction: column;
-      align-items: start;
+      align-items: flex-start;
       justify-content: space-around;
       margin: 15px;
       padding: 30px 35px;
@@ -25,11 +29,17 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
       height: 510px;
       border: 2px solid #CCC;
       border-radius: 20px;
+      transition: all 0.4s ease;
 
+      &:hover{
+        transform: scale(1.03);
+        transition: all 0.4s ease;
+       }
     }
     .prodcard-img {
       display: block;
       width: 200px;
+      cursor: pointer;
     }
     .prodcard-href {
       font-size: 18px;

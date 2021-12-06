@@ -1,59 +1,43 @@
-import {Component, OnInit, OnChanges, Input} from '@angular/core';
-import { items } from "../../data/product.data";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {items} from "../../data/product.data";
+import {ActivatedRoute, Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-catalog',
   template: `
     <app-basket [basketItems]="basket" [totalItems]="cartCount" [totalSum]="basketSum" (deletedIdItem)="deleteItem($event)" (cleared)="clearBasket()"></app-basket>
-    <div class="card-items">
-      <div *ngFor="let item of productArr">
-        <app-prod-card
-                        (selected)="select($event)"
-                       [src] = "item.img"
-                       [name] = "item.name"
-                       [model] = "item.model"
-                       [cost] = "item.cost"
-                       [id]= "item.id"
-                       >
-        </app-prod-card>
-      </div>
-    </div>
     <app-toggle [toggles]="toggle" (changed)="doCatalogFilter($event)" [value]="value"></app-toggle>
+    <div class="card-items">
+      <app-prod-card *ngFor="let item of productArr"
+                     (selected)="select($event)"
+                     [src] = "item.img"
+                     [name] = "item.name"
+                     [model] = "item.model"
+                     [cost] = "item.cost"
+                     [id]= "item.id"
+      >
+      </app-prod-card>
+    </div>
   `,
   styles: [
     `.card-items {
-        display: flex;
+      display: flex;
     }`
   ]
 })
 export class CatalogComponent implements OnInit {
-
-  value:string = '';
-
   public productArr =  items;
+  public value:string = '';
+  public filter:string = '';
+
+  @Output() selected = new EventEmitter();
+
   public cartCount:number = 0;
   public basketSum:number = 0;
 
   basket:any[] = [];
 
-  toggle:any[] = [
-    {
-      value: 'default',
-      label: 'Показать все'
-    },
-    {
-      value: 'available',
-      label: 'В наличии'
-    },
-    {
-      value: 'discount',
-      label: 'Со скидкой'
-    }
-    ]
-
-  // changeColor(selector:string){
-  //   document.querySelector()
-  // }
 
   clearBasket(){
     this.basket = [];
@@ -72,34 +56,6 @@ export class CatalogComponent implements OnInit {
       }
     })
     this.getTotalSum()
-  }
-
-  doCatalogFilter(value:any){
-    let itemValue:string = value.target.value
-    switch (itemValue){
-      case "available":
-        this.productArr = []
-        items.forEach(item => {
-          if(item["available"]){
-            this.productArr.push(item)
-          }
-        })
-        this.value = itemValue
-        break;
-      case "discount":
-        this.productArr = []
-        items.forEach(item => {
-          if(item["discount"]){
-            this.productArr.push(item)
-          }
-        })
-        this.value = itemValue
-        break;
-      case "default":
-        this.productArr = items;
-        this.value = itemValue
-        break;
-    }
   }
 
   getCount() {
@@ -136,9 +92,62 @@ export class CatalogComponent implements OnInit {
     this.getTotalSum()
   }
 
-  constructor() { }
+  toggle:any[] = [
+    {
+      value: 'default',
+      label: 'Показать все'
+    },
+    {
+      value: 'available',
+      label: 'В наличии'
+    },
+    {
+      value: 'discount',
+      label: 'Со скидкой'
+    }
+  ]
+
+  doCatalogFilter(value:any){
+
+    let itemValue:string =  value
+    switch (itemValue){
+      case "available":
+        this.productArr = []
+        items.forEach(item => {
+          if(item["available"]){
+            this.productArr.push(item)
+          }
+        })
+        this.value = itemValue
+
+        break;
+      case "discount":
+        this.productArr = []
+        items.forEach(item => {
+          if(item["discount"]){
+            this.productArr.push(item)
+          }
+        })
+        this.value = itemValue
+
+        break;
+      case "default":
+        this.productArr = items;
+        this.value = itemValue
+
+        break;
+    }
+    this.filter = this.rout.snapshot.queryParams['filter']
+  }
+
+
+  constructor(private router: Router, private rout: ActivatedRoute) {
+    this.filter = this.rout.snapshot.queryParams['filter']
+    this.doCatalogFilter(this.filter)
+  }
 
   ngOnInit(): void {
+
   }
 
   ngOnChanges() {

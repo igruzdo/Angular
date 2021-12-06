@@ -1,4 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-toggle',
@@ -9,7 +11,7 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
                    [buttonValue]="item.value"
                    [text]="item.label"
                    [color]="isChanged(item.value) ? 'accent': 'default'"
-                   (click)="doChange($event)"
+                   (click)="doChange(item.value)"
       ></app-button>
   `,
   styles: [`
@@ -26,17 +28,19 @@ export class ToggleComponent implements OnInit {
     label: 'default'
   }]
 
-  @Output() changed = new EventEmitter();
+  @Output() changed = new EventEmitter()
 
-  doChange(value:any) {
-    this.changed.emit(value)
+  doChange(filter:string) {
+    this.changed.emit(filter)
+    if(!filter) return;
+    this.router.navigate(['.'], {relativeTo: this.rout, queryParams: {filter}})
   }
 
   isChanged(param:any) {
     return this.value === param
   }
 
-  constructor() { }
+  constructor(private router: Router, private rout: ActivatedRoute) { }
 
   ngOnInit(): void {
   }

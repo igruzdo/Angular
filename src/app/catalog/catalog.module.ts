@@ -5,8 +5,7 @@ import {ProdCardModule} from "../prod-card/prod-card.module";
 import {ButtonModule} from "../button/button.module";
 import {BasketModule} from "../basket/basket.module";
 import {ToggleModule} from "../toggle/toggle.module";
-
-
+import {CatalogRoutingModule} from "./catalog-routing.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +16,8 @@ import {ToggleModule} from "../toggle/toggle.module";
     ProdCardModule,
     ButtonModule,
     BasketModule,
-    ToggleModule
+    ToggleModule,
+    CatalogRoutingModule,
   ],
   exports: [
     CatalogComponent

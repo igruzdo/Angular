@@ -4,6 +4,7 @@ import { ProdCardComponent } from "./prod-card.component";
 import { BageModule } from "../bage/bage.module";
 import { RatingModule } from "../rating/rating.module";
 import { ButtonModule } from "../button/button.module";
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ButtonModule } from "../button/button.module";
     CommonModule,
     BageModule,
     RatingModule,
-    ButtonModule
+    ButtonModule,
+    RouterModule
   ],
   exports: [
     ProdCardComponent

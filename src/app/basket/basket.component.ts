@@ -35,6 +35,7 @@ import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@ang
         box-sizing: border-box;
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 6px 8px rgba(0, 0, 0, 0.08);
         background-color: white;
+        z-index: 1000;
       &-btns{
         margin-top: 10px;
         display: flex;
