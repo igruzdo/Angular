@@ -1,4 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {BasketService} from "../services/basket.service";
 
 
 @Component({
@@ -8,12 +9,12 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
       <img class="prodcard-img"
            src="{{ src }}"
            alt="prodimg"
-           [routerLink]="['/catalog/product', id]"
+           [routerLink]="['/catalog/product']"
            [queryParams]="{id: id}">
       <a class="prodcard-href" href="#">{{ name }}</a>
       <h3 class="prodcard-model">{{ model }}</h3>
       <span class="prodcard-cost">{{cost | currency: 'RUB':'symbol-narrow':'3.0': 'ru'}}</span>
-      <app-button color="default" text="Добавить в корзину" (click)="select()"></app-button>
+      <app-button color="default" text="Добавить в корзину" (click)="addToCart()"></app-button>
     </div>
   `,
   styles: [`
@@ -60,10 +61,8 @@ export class ProdCardComponent implements OnInit {
   @Input() cost: number = 99999;
   @Input() id: number = 0;
 
-  @Output() selected = new EventEmitter();
-
-  select() {
-    this.selected.emit({
+  addToCart() {
+    this.service.addProduct({
       id: this.id,
       cost: this.cost,
       model: this.model,
@@ -71,7 +70,7 @@ export class ProdCardComponent implements OnInit {
     })
   }
 
-  constructor() { }
+  constructor(public service:BasketService) { }
   ngOnInit(): void {
   }
 }

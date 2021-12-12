@@ -6,6 +6,8 @@ import {ButtonModule} from "../button/button.module";
 import {BasketModule} from "../basket/basket.module";
 import {ToggleModule} from "../toggle/toggle.module";
 import {CatalogRoutingModule} from "./catalog-routing.module";
+import {CatalogPageModule} from "../catalog-page/catalog-page.module";
+import {CatalogService} from "../services/catalog.service";
 
 @NgModule({
   declarations: [
@@ -18,9 +20,13 @@ import {CatalogRoutingModule} from "./catalog-routing.module";
     BasketModule,
     ToggleModule,
     CatalogRoutingModule,
+    CatalogPageModule,
   ],
   exports: [
     CatalogComponent
+  ],
+  providers: [
+    CatalogService
   ]
 })
 export class CatalogModule { }

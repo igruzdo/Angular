@@ -1,17 +1,18 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {BasketService} from "../services/basket.service";
 
 @Component({
   selector: 'app-basket',
   template: `
     <div class="dropdown">
-      <div class="count" *ngIf="totalItems">
-        <p>{{totalItems}}</p>
+      <div class="count" *ngIf="service.cartCount">
+        <p>{{service.cartCount}}</p>
       </div>
       <app-button color="default" size="default" (click)="isShowToggleClick()" text="Корзина"></app-button>
-      <div *ngIf='isShow && totalItems' class="menu-wrapper">
+      <div *ngIf='isShow && service.cartCount' class="menu-wrapper">
         <button class="menu-wrapper-close" (click)="isShowToggleClick()">Закрыть</button>
-        <app-list [data]="basketItems" (deleted)="deleteItemFromCart($event)"></app-list>
-        <span>Сумма заказа: {{totalSum | currency: 'RUB':'symbol-narrow':'3.0': 'ru'}}</span>
+        <app-list [data]="service.basket" (deleted)="deleteItemFromCart($event)"></app-list>
+        <span>Сумма заказа: {{service.basketSum | currency: 'RUB':'symbol-narrow':'3.0': 'ru'}}</span>
         <div class="menu-wrapper-btns">
           <button class="menu-wrapper-clear" (click)="clearBasket()">Очистить</button>
           <button class="menu-wrapper-order" (click)="clearBasket()">Оформить заказ</button>
@@ -92,34 +93,23 @@ import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@ang
 })
 export class BasketComponent implements OnInit {
 
-  @Input() isShow = false;
+  isShow = false;
   @Input() trigger = 'click';
-  @Input() basketItems: any = [{model: 'default', count: 0}];
-  @Input() totalItems: number = 0;
-  @Input() totalSum:number = 0;
-
-  @Output() deletedIdItem = new EventEmitter();
-  @Output() cleared = new EventEmitter();
-
-  constructor() {  }
 
   deleteItemFromCart(val:number){
-    this.deletedIdItem.emit(val)
-    if (this.totalItems == 1) {
+    this.service.removeProduct(val)
+    if (this.service.cartCount == 0) {
       this.isShow = false;
     }
   }
 
   clearBasket() {
-    this.cleared.emit()
-    this.isShowToggleClick()
+    this.service.clearBasket()
+    this.isShow = false;
   }
 
-  ngOnInit(): void {
-
-  }
   isShowToggleClick() {
-    if(this.trigger === 'click' && this.totalItems){
+    if(this.trigger === 'click' && this.service.cartCount){
       this.isShow = !this.isShow;
     }
   }
@@ -134,5 +124,11 @@ export class BasketComponent implements OnInit {
     if (this.trigger === 'hover') {
       this.isShow = false;
     }
+  }
+
+  constructor(public service: BasketService) {
+  }
+
+  ngOnInit(): void {
   }
 }

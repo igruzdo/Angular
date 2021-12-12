@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { items } from "../../data/product.data";
 import {ActivatedRoute} from "@angular/router";
+import {CatalogService} from "../services/catalog.service";
 
 @Component({
   selector: 'app-product-page',
@@ -36,12 +37,13 @@ export class ProductPageComponent implements OnInit {
     this.selected.emit(val)
   }
 
-  constructor(private rout: ActivatedRoute) {
+  constructor(private rout: ActivatedRoute, public service: CatalogService) {
     this.params = this.rout.snapshot.queryParams
-    this.findProduct()
+    this.itemData = this.service.getProduct(this.params['id'])
   }
 
   ngOnInit(): void {
+
   }
 
 }
