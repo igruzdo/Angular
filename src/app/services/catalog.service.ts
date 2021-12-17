@@ -1,47 +1,29 @@
 import { Injectable } from '@angular/core';
 import {DataService} from "./data.service";
-import {items} from "../../data/product.data";
+import {HttpService} from "./http.service";
+import {Observable} from "rxjs";
+import {Product} from "../types/data.types";
+import {HttpParams} from "@angular/common/http";
+import {ActivatedRoute} from "@angular/router";
+
+export interface CatalogResponse {
+  meta: {[key:string]: number},
+  items: Array<Product>
+}
+
 
 @Injectable()
-
 export class CatalogService {
 
-  public productsFromDataService:any[] = this.service.getData();
-
-  getProducts(filterBy:string = 'default') {
-   let products = []
-
-    switch (filterBy){
-      case "available":
-        this.productsFromDataService.forEach(item => {
-          if(item["available"]){
-            products.push(item)
-          }
-        })
-        break;
-      case "discount":
-        this.productsFromDataService.forEach(item => {
-          if(item["discount"]){
-            products.push(item)
-          }
-        })
-        break;
-      case "default":
-        products = this.productsFromDataService;
-        break;
-    }
-    return products;
+  getProducts(queryParams:{[key: string]: string}):Observable<any> {
+    const url = 'https://localhost:3000/api/products/'
+        const params = new HttpParams({fromObject: queryParams})
+        return this.httpService.get<Array<Product>>(url, params);
   }
 
-  getProduct(id: number) {
-    let itemById:any;
-    this.productsFromDataService.forEach(item => {
-      if(item.id == id) {
-        itemById =  item;
-      }
-    })
-    return itemById;
+  getProduct(id:string):Observable<any> {
+    const url = `https://localhost:3000/api/products/${id}`
+    return this.httpService.get<Array<Product>>(url);
   }
-
-  constructor(public service: DataService) { }
+  constructor(public service: DataService, private httpService: HttpService, public route: ActivatedRoute) { }
 }

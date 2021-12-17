@@ -24,6 +24,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
       font-size: 14px;
       cursor: pointer;
       color: #FFF;
+      margin: 5px;
     }
     .active{
       font-weight: 600;

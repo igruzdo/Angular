@@ -6,17 +6,19 @@ import {DropDownModule} from "./drop-down/drop-down.module";
 import {AppRoutingModule} from "./app-routing.module";
 import {NotFoundModule} from "./not-found/not-found.module";
 import {CatalogPageModule} from "./catalog-page/catalog-page.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
     imports: [
-        BrowserModule,
-        DropDownModule,
-        AppRoutingModule,
-        NotFoundModule,
-        CatalogPageModule
+      BrowserModule,
+      DropDownModule,
+      AppRoutingModule,
+      NotFoundModule,
+      CatalogPageModule,
+      HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]

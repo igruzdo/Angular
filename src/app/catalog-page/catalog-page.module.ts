@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CatalogPageComponent } from './catalog-page.component';
 import {ProdCardModule} from "../prod-card/prod-card.module";
 import {CatalogService} from "../services/catalog.service";
+import {ButtonModule} from "../button/button.module";
 
 
 @NgModule({
@@ -12,10 +13,11 @@ import {CatalogService} from "../services/catalog.service";
     exports: [
         CatalogPageComponent,
     ],
-    imports: [
-        CommonModule,
-        ProdCardModule
-    ],
+  imports: [
+    CommonModule,
+    ProdCardModule,
+    ButtonModule
+  ],
   providers: [
     CatalogService
   ]

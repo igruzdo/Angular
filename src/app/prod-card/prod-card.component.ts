@@ -55,11 +55,11 @@ import {BasketService} from "../services/basket.service";
   ]
 })
 export class ProdCardComponent implements OnInit {
-  @Input() src: string = "#";
-  @Input() name: string = "Name";
-  @Input() model: string = "model";
-  @Input() cost: number = 99999;
-  @Input() id: number = 0;
+  @Input() src?: string = "#";
+  @Input() name?: string = "Name";
+  @Input() model?: string = "model";
+  @Input() cost?: number = 99999;
+  @Input() id?: number = 0;
 
   addToCart() {
     this.service.addProduct({
