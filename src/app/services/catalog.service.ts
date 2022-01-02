@@ -11,14 +11,20 @@ export interface CatalogResponse {
   items: Array<Product>
 }
 
+export interface Request {
+  requestUrl:string,
+  products:CatalogResponse
+}
 
 @Injectable()
 export class CatalogService {
 
+  private cash:Request[] = [];
+
   getProducts(queryParams:{[key: string]: string}):Observable<any> {
     const url = 'https://localhost:3000/api/products/'
-        const params = new HttpParams({fromObject: queryParams})
-        return this.httpService.get<Array<Product>>(url, params);
+    const params = new HttpParams({fromObject: queryParams})
+    return this.httpService.get<Array<Product>>(url, params);
   }
 
   getProduct(id:string):Observable<any> {
