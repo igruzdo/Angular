@@ -21,6 +21,11 @@ export const routes: Routes = [
     ]
   },
   {
+    path: '',
+    redirectTo: 'catalog',
+    pathMatch: 'full'
+  },
+  {
     path: '404',
     component: NotFoundComponent
   },
@@ -28,6 +33,7 @@ export const routes: Routes = [
     path: '**',
     redirectTo: '404'
   }
+
 ]
 
 export const options: ExtraOptions = {
