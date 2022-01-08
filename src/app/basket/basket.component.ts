@@ -15,13 +15,38 @@ import {BasketService} from "../services/basket.service";
         <span>Сумма заказа: {{service.basketSum | currency: 'RUB':'symbol-narrow':'3.0': 'ru'}}</span>
         <div class="menu-wrapper-btns">
           <button class="menu-wrapper-clear" (click)="clearBasket()">Очистить</button>
-          <button class="menu-wrapper-order" (click)="clearBasket()">Оформить заказ</button>
+          <button class="menu-wrapper-order" (click)="showOrderModal()">Оформить заказ</button>
         </div>
+      </div>
+    </div>
+    <div class="orderconfirm_conteiner" *ngIf="isShowOrderConfirm">
+      <div class="orderconfirm">
+        <app-orderconfirm (closed)="closeOrderModal($event)" [previousValue]="previosState"></app-orderconfirm>
       </div>
     </div>
   `,
   styles: [
     `
+      .orderconfirm {
+        top: 10%;
+        width: 30%;
+        position: fixed;
+      }
+
+      .orderconfirm_conteiner {
+        z-index: 20;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(155, 154, 154, 0.65);
+      }
+
       .dropdown {
         position: relative;
         display: inline-block;
@@ -36,14 +61,17 @@ import {BasketService} from "../services/basket.service";
         box-sizing: border-box;
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 6px 8px rgba(0, 0, 0, 0.08);
         background-color: white;
-        z-index: 1000;
-      &-btns{
+        z-index: 10;
+
+      &
+      -btns {
         margin-top: 10px;
         display: flex;
         justify-content: space-between;
-       }
+      }
 
-      &-close {
+      &
+      -close {
         height: 20px;
         border-radius: 10px;
         border: 2px solid rgba(59, 101, 255, .1);
@@ -54,7 +82,8 @@ import {BasketService} from "../services/basket.service";
         color: black;
       }
 
-      &-clear {
+      &
+      -clear {
         height: 20px;
         border-radius: 10px;
         border: 2px solid rgba(59, 101, 255, .1);
@@ -65,7 +94,8 @@ import {BasketService} from "../services/basket.service";
         color: black;
       }
 
-      &-order {
+      &
+      -order {
         height: 20px;
         border-radius: 10px;
         border: 2px solid rgba(59, 101, 255, .1);
@@ -95,8 +125,20 @@ export class BasketComponent implements OnInit {
 
   isShow = false;
   @Input() trigger = 'click';
+  isShowOrderConfirm = false;
 
-  deleteItemFromCart(val:number){
+  public previosState: { [key: string]: any } = {
+    name: '',
+    phone: '',
+    pickupOwn: '',
+    address: {
+      street: '',
+      city: ''
+    },
+    payway: ''
+  }
+
+  deleteItemFromCart(val: number) {
     this.service.removeProduct(val)
     if (this.service.cartCount == 0) {
       this.isShow = false;
@@ -108,8 +150,22 @@ export class BasketComponent implements OnInit {
     this.isShow = false;
   }
 
+  showOrderModal() {
+    this.isShowOrderConfirm = !this.isShowOrderConfirm
+
+    let data = localStorage.getItem('lastData')
+    if (data) {
+      this.previosState = JSON.parse(data)
+    }
+    console.log(this.previosState)
+  }
+
+  closeOrderModal(val: any) {
+    this.isShowOrderConfirm = val
+  }
+
   isShowToggleClick() {
-    if(this.trigger === 'click' && this.service.cartCount){
+    if (this.trigger === 'click' && this.service.cartCount) {
       this.isShow = !this.isShow;
     }
   }
@@ -130,5 +186,6 @@ export class BasketComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 }

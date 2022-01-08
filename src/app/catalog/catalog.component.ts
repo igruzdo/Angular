@@ -7,8 +7,14 @@ import {CatalogService} from "../services/catalog.service";
   selector: 'app-catalog',
   template: `
     <div class="header">
-      <app-basket></app-basket>
-      <app-toggle [toggles]="toggle" (changed)="doCatalogFilter($event)" [value]="value"></app-toggle>
+      <ng-container>
+        <app-basket></app-basket>
+        <app-toggle [toggles]="toggle" (changed)="doCatalogFilter($event)" [value]="value"></app-toggle>
+      </ng-container>
+      <app-button text="Зарегистрироваться" (click)="showPopupRegistration()" color="warning"></app-button>
+    </div>
+    <div *ngIf="isShowPopup">
+      <app-registration (closed)="showPopupRegistration()"></app-registration>
     </div>
     <div class="card-items">
       <router-outlet></router-outlet>
@@ -17,6 +23,7 @@ import {CatalogService} from "../services/catalog.service";
   styles: [`
   .header {
     display: flex;
+    position: relative;
   }
   `
   ]
@@ -25,6 +32,7 @@ export class CatalogComponent implements OnInit {
   public value:string = '';
   public filter:string = '';
   public cartTrigger:string = 'click';
+  public isShowPopup:boolean = false;
 
   toggle:any[] = [
     {
@@ -57,6 +65,10 @@ export class CatalogComponent implements OnInit {
         this.value = ''
     }
     this.filter = this.rout.snapshot.queryParams['orderBy']
+  }
+
+  showPopupRegistration():void {
+    this.isShowPopup = !this.isShowPopup;
   }
 
 

@@ -19,7 +19,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
       height: 36px;
       border-radius: 10px;
       border: 2px solid rgba(59, 101, 255, .1);
-      font-family: Inter;
+      font-family: Inter sans-serif;
       font-weight: 400;
       font-size: 14px;
       cursor: pointer;
@@ -86,7 +86,7 @@ export class ButtonComponent implements OnInit, OnChanges{
     primary: '#1a05ff',
     accent: '#ff00f7',
     warning: '#f00',
-    success: '#0eed33'
+    success: '#0eed33',
   }
 
   public sizes: {[index: string]:any} = {

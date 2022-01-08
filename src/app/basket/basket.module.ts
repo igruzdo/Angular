@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {BasketComponent} from "./basket.component";
 import {ButtonModule} from "../button/button.module";
 import {ListModule} from "../list/list.module";
+import {OrderconfirmModule} from "../orderconfirm/orderconfirm.module";
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import {ListModule} from "../list/list.module";
   imports: [
     CommonModule,
     ButtonModule,
-    ListModule
+    ListModule,
+    OrderconfirmModule
   ],
   exports: [
     BasketComponent
