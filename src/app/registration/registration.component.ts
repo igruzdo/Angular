@@ -16,7 +16,8 @@ import {NgForm} from "@angular/forms";
                    required
                    appNameMatch
                    #name="ngModel"
-                   pattern="^[a-zA-Zа-яёА-ЯЁ ]+$">
+                   pattern="^[a-zA-Zа-яёА-ЯЁ ]+$"
+                   [ngModelOptions]="{ updateOn: 'blur' }">
             <div class="error" *ngIf="name.hasError('required')">Введите имя и фамилию</div>
             <div class="error" *ngIf="name.hasError('pattern')">Введите только буквы</div>
             <div class="error" *ngIf="name.hasError('nameMatch')">Введите не менее двух слов</div>
@@ -24,12 +25,14 @@ import {NgForm} from "@angular/forms";
                    ngModel
                    required
                    email
-                   #email="ngModel">
+                   #email="ngModel"
+                   [ngModelOptions]="{ updateOn: 'blur' }">
             <div class="error" *ngIf="email.hasError('required')">Введите адрес электронной почты</div>
             <div class="error" *ngIf="email.hasError('email')">Введите корректный адрес электронной почты</div>
 
             <ng-container ngModelGroup="password" #passwordGroup='ngModelGroup' appPasswordMatch>
               <input type=password name=password placeholder="Пароль"
+                    [ngModelOptions]="{ updateOn: 'blur' }"
                      ngModel
                      required
                      #password="ngModel"
@@ -40,10 +43,11 @@ import {NgForm} from "@angular/forms";
               <input type=password name=confirm placeholder="Повторите пароль"
                      ngModel
                      required
-                     #confirm="ngModel">
+                     #confirm="ngModel"
+                     [ngModelOptions]="{ updateOn: 'blur' }">
               <div class="error" *ngIf="passwordGroup.hasError('passwordMatch')">Введенные пароли не совпадают</div>
             </ng-container>
-            <app-button text="Отправить" color="primary"></app-button>
+            <app-button text="Отправить" color="primary" [isDisabled]='!!form.invalid'></app-button>
           </div>
         </form>
       </div>

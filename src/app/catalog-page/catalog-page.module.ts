@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CatalogPageComponent } from './catalog-page.component';
-import {ProdCardModule} from "../prod-card/prod-card.module";
-import {CatalogService} from "../services/catalog.service";
-import {ButtonModule} from "../button/button.module";
+import { ProdCardModule } from "../prod-card/prod-card.module";
+import { CatalogService } from "../services/catalog.service";
+import { ButtonModule } from "../button/button.module";
+import { ProductImgModule } from "../product-img/product-img.module";
+import { ProductBrandModule } from '../product-brand/product-brand.module';
+import { BageModule } from '../bage/bage.module';
+import { ProductPriceModule } from '../product-price/product-price.module';
 
 
 @NgModule({
@@ -16,7 +20,11 @@ import {ButtonModule} from "../button/button.module";
   imports: [
     CommonModule,
     ProdCardModule,
-    ButtonModule
+    ButtonModule,
+    ProductImgModule,
+    ProductBrandModule,
+    BageModule,
+    ProductPriceModule
   ],
   providers: [
     CatalogService

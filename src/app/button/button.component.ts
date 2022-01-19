@@ -19,7 +19,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
       height: 36px;
       border-radius: 10px;
       border: 2px solid rgba(59, 101, 255, .1);
-      font-family: Inter sans-serif;
+      font-family: Inter;
       font-weight: 400;
       font-size: 14px;
       cursor: pointer;

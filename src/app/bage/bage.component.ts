@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-bage',
   template: `
-    <p>
-      bage works!
-    </p>
+    <h3 class="prodcard-model">{{ modelName }}</h3>
   `,
-  styles: [
+  styles: [`
+  .prodcard-model{
+      font-size: 25px;
+    }`
   ]
 })
 export class BageComponent implements OnInit {
-
+  
+  @Input() modelName!:string;
   constructor() { }
 
   ngOnInit(): void {

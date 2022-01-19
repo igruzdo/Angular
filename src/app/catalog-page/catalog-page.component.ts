@@ -7,16 +7,14 @@ import {
   filter,
   from,
   fromEvent,
-  iif,
-  map,
   Observable,
-  of,
   pluck,
   switchMap,
   tap,
   toArray
 } from "rxjs";
 import {Product} from "../types/data.types";
+import {BasketService} from "../services/basket.service";
 
 @Component({
   selector: 'app-catalog-page',
@@ -24,19 +22,21 @@ import {Product} from "../types/data.types";
     <input type="text" placeholder="поиск..." id="search">
     <div class="card-items">
       <app-prod-card *ngFor="let item of searchResult$ | async"
-                     [src] = "item.image"
-                     [name] = "item.company"
-                     [model] = "item.title"
-                     [cost] = "item.price"
                      [id]= "item.id">
+        <app-product-img imgSrc="{{item.image}}"></app-product-img>
+        <app-product-brand brandName="{{item.company}}"></app-product-brand>
+        <app-bage modelName="{{item.title}}"></app-bage>
+        <app-product-price prodCost="{{item.price}}"></app-product-price>
+        <app-button color="default" text="Добавить в корзину" (click)="addToCart($event, item.id, item.price, item.title)"></app-button>
       </app-prod-card>
       <ng-container *ngIf="!isSearchStart">
         <app-prod-card *ngFor="let item of productArr.items"
-                       [src] = "item.image"
-                       [name] = "item.company"
-                       [model] = "item.title"
-                       [cost] = "item.price"
                        [id]= "item.id">
+          <app-product-img imgSrc="{{item.image}}"></app-product-img>
+          <app-product-brand brandName="{{item.company}}"></app-product-brand>
+          <app-bage modelName="{{item.title}}"></app-bage>
+          <app-product-price prodCost="{{item.price}}"></app-product-price>
+          <app-button color="default" text="Добавить в корзину" (click)="addToCart($event, item.id, item.price, item.title)"></app-button>
         </app-prod-card>
       </ng-container>
       <ng-container *ngIf = "isResultNull <= 0">
@@ -82,6 +82,17 @@ export class CatalogPageComponent implements OnInit {
 
   public isResultNull:any;
 
+  addToCart($event:any, id:any, cost:any, model:any) {
+    this.BasketService.addProduct({
+      id: id,
+      cost: cost,
+      model: model,
+      count: 1
+    })
+    $event.stopPropagation();
+    console.log($event)
+  }
+
   showMore() {
 
     if(this.productArr.meta['currentPage'] == this.productArr.meta['totalPages']){
@@ -102,7 +113,7 @@ export class CatalogPageComponent implements OnInit {
     )
   }
 
-  constructor(private service: CatalogService, private rout: ActivatedRoute, private router: Router) {
+  constructor(private service: CatalogService, private rout: ActivatedRoute, private router: Router, public BasketService:BasketService) {
 
 
     this.productArr = {
@@ -134,7 +145,6 @@ export class CatalogPageComponent implements OnInit {
             url: document.location.href,
             response: value
           })
-          console.log(this.cashArr)
         })
         console.log('from api')
       }

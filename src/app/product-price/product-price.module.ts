@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RatingComponent } from './rating.component';
+import { ProductPriceComponent } from './product-price.component';
 
 
 
 @NgModule({
   declarations: [
-    RatingComponent
+    ProductPriceComponent
   ],
   imports: [
     CommonModule
   ],
-  exports: [
-    RatingComponent
+  exports:[
+    ProductPriceComponent
   ]
 })
-export class RatingModule { }
+export class ProductPriceModule { }
