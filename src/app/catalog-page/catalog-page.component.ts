@@ -42,10 +42,16 @@ import {BasketService} from "../services/basket.service";
       <ng-container *ngIf = "isResultNull <= 0">
         <p>Ничего не найдено</p>
       </ng-container>
+
       <div class="more" *ngIf="!isSearchStart || isResultNull > 0">
         <app-button text="Загрузить еще" color="success" (click)="showMore()"></app-button>
       </div>
     </div>
+    <div class="grid--col-2 cimple-card" *ngForObject = "let prop in this.exampleObj">
+      <h3>{{prop.name}}</h3>
+      <h3>{{prop.value}}</h3>
+    </div>
+    <app-button text="Сменить объекст" color="primary" (click)="changeObj()"></app-button>
   `,
   styles: [
     `
@@ -71,16 +77,27 @@ import {BasketService} from "../services/basket.service";
 
 export class CatalogPageComponent implements OnInit {
 
+  public exampleObj:{[key:string]: string | number} = {
+    example_1: 'one',
+    example_2: 'two',
+    example_3: 'three',
+    example_4: 'four',
+    example_5: 'five',
+  }
+
   public productArr: CatalogResponse;
   public page:number = 1;
   private queryParams = {}
   private cashArr:any[] = []
-
   public isSearchStart = false;
-
   public searchResult$: Observable<Array<Product>> = new Observable<Array<Product>>()
-
   public isResultNull:any;
+
+  changeObj() {
+    this.exampleObj = {
+      asdasdasd: 'asdasdas'
+    }
+  }
 
   addToCart($event:any, id:any, cost:any, model:any) {
     this.BasketService.addProduct({
@@ -161,6 +178,8 @@ export class CatalogPageComponent implements OnInit {
       switchMap((searchTerm: any) => this.searchProduct(searchTerm.toLowerCase())),
       tap(el => console.log(el)),
     )
+
+
 
     this.searchResult$.subscribe(val => {
       this.isResultNull = val.length

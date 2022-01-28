@@ -8,11 +8,13 @@ import { ProductImgModule } from "../product-img/product-img.module";
 import { ProductBrandModule } from '../product-brand/product-brand.module';
 import { BageModule } from '../bage/bage.module';
 import { ProductPriceModule } from '../product-price/product-price.module';
+import { NgForObjectDirective } from '../directives/ng-for-object.directive';
 
 
 @NgModule({
     declarations: [
-        CatalogPageComponent
+        CatalogPageComponent,
+        NgForObjectDirective
     ],
     exports: [
         CatalogPageComponent,

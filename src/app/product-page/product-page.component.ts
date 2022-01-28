@@ -20,7 +20,7 @@ import {BasketService} from "../services/basket.service";
         <div>{{item['head']}}</div>
       </app-tabs-header>
       </ng-container>
-      <ng-container ngProjectAs="app-tabs-header" *ngFor="let item of tabs">
+      <ng-container ngProjectAs="app-tabs-body" *ngFor="let item of tabs">
         <app-tabs-body [tabContentCount]="item['id']">
           <div>{{item['content']}}</div>
         </app-tabs-body>
