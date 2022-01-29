@@ -7,14 +7,12 @@ import {CatalogService} from "../services/catalog.service";
   selector: 'app-catalog',
   template: `
     <div class="header">
-      <ng-container>
-        <app-basket></app-basket>
-        <app-toggle [toggles]="toggle" (changed)="doCatalogFilter($event)" [value]="value"></app-toggle>
-      </ng-container>
+      <app-basket></app-basket>
+      <app-toggle [toggles]="toggle" (changed)="doCatalogFilter($event)" [value]="value"></app-toggle>
       <app-button text="Зарегистрироваться" (click)="showPopupRegistration()" color="warning"></app-button>
     </div>
     <div *ngIf="isShowPopup">
-      <app-registration (closed)="showPopupRegistration()"></app-registration>
+      <app-registration clickAbroad className="popup-design" (closed)="showPopupRegistration()"></app-registration>
     </div>
     <div class="card-items">
       <router-outlet></router-outlet>

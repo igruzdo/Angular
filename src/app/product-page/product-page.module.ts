@@ -11,12 +11,14 @@ import { ButtonModule } from "../button/button.module";
 import { TabsModule } from '../tabs/tabs.module';
 import { TabsBodyModule } from '../tabs-body/tabs-body.module';
 import { TabsHeaderModule } from '../tabs-header/tabs-header.module';
+import { MenuDirective } from '../menu/directives/menu.directive';
 
 
 
 @NgModule({
   declarations: [
-    ProductPageComponent
+    ProductPageComponent,
+    MenuDirective
   ],
   imports: [
     CommonModule,

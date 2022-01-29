@@ -26,8 +26,9 @@ import {BasketService} from "../services/basket.service";
         </app-tabs-body>
       </ng-container>
     </app-tabs>
+    <app-button [menuDirective]="contentForMenu" position="right" text="Click me" color="primary"></app-button>
   </div>
-    
+  
   `,
   styles: [`
   .product-page {
@@ -39,6 +40,8 @@ import {BasketService} from "../services/basket.service";
 export class ProductPageComponent implements OnInit {
   
   @Output() selected = new EventEmitter();
+
+  public contentForMenu = ['asdasdas', 'asdasdasd', '23ddwdwedwed']
 
   public itemData:any = {};
   public params: {[key:string]: any};

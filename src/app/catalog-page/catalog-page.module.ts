@@ -14,7 +14,7 @@ import { NgForObjectDirective } from '../directives/ng-for-object.directive';
 @NgModule({
     declarations: [
         CatalogPageComponent,
-        NgForObjectDirective
+        NgForObjectDirective,
     ],
     exports: [
         CatalogPageComponent,

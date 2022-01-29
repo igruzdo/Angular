@@ -6,7 +6,6 @@ import {Component, HostListener, Input, OnInit} from '@angular/core';
     <div class="dropdown">
       <app-button color="default" size="default" (click)="isShowToggleClick()" ></app-button>
       <div *ngIf='isShow' class="menu-wrapper">
-        <app-menu></app-menu>
       </div>
     </div>
   `,

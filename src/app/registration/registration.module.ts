@@ -7,11 +7,13 @@ import {PasswordMatchDirective} from "../checkout/directives/password-match.dire
 import {NameMatchDirective} from "../checkout/directives/name-match.directive";
 
 
+
 @NgModule({
   declarations: [
     RegistrationComponent,
     PasswordMatchDirective,
-    NameMatchDirective
+    NameMatchDirective,
+
   ],
   exports: [
     RegistrationComponent

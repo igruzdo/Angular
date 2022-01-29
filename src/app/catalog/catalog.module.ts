@@ -9,10 +9,12 @@ import {CatalogRoutingModule} from "./catalog-routing.module";
 import {CatalogPageModule} from "../catalog-page/catalog-page.module";
 import {CatalogService} from "../services/catalog.service";
 import {RegistrationModule} from "../registration/registration.module";
+import { ClickAbroadDirective } from '../directives/click-abroad.directive';
 
 @NgModule({
   declarations: [
-    CatalogComponent
+    CatalogComponent,
+    ClickAbroadDirective
   ],
   imports: [
     CommonModule,

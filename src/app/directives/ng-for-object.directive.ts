@@ -22,7 +22,6 @@ export class NgForObjectDirective implements DoCheck{
   ngDoCheck(): void {
     const objectChanges: KeyValueChanges<string, string | number> | null = this.differ.diff(this.inputObject)
     if(objectChanges) {
-      console.log(objectChanges)
       objectChanges.forEachChangedItem((item: KeyValueChangeRecord<string, string | number>) => {
         this.viewContainer.createEmbeddedView(this.templateRef, {
           $implicit: {
