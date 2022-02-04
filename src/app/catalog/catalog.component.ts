@@ -8,6 +8,7 @@ import {CatalogService} from "../services/catalog.service";
   template: `
     <div class="header">
       <app-basket></app-basket>
+      <app-favorite></app-favorite>
       <app-toggle [toggles]="toggle" (changed)="doCatalogFilter($event)" [value]="value"></app-toggle>
       <app-button text="Зарегистрироваться" (click)="showPopupRegistration()" color="warning"></app-button>
     </div>

@@ -10,6 +10,7 @@ import {CatalogPageModule} from "../catalog-page/catalog-page.module";
 import {CatalogService} from "../services/catalog.service";
 import {RegistrationModule} from "../registration/registration.module";
 import { ClickAbroadDirective } from '../directives/click-abroad.directive';
+import { FavoriteModule } from '../favorite/favorite.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ClickAbroadDirective } from '../directives/click-abroad.directive';
     ToggleModule,
     CatalogRoutingModule,
     CatalogPageModule,
-    RegistrationModule
+    RegistrationModule,
+    FavoriteModule
   ],
   exports: [
     CatalogComponent

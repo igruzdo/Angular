@@ -5,5 +5,6 @@ export interface  Product {
   price?:number,
   image?:string,
   rating?:number,
-  category?:string
+  category?:string,
+  favorit?: boolean
 }

@@ -9,6 +9,7 @@ import { ProductBrandModule } from '../product-brand/product-brand.module';
 import { BageModule } from '../bage/bage.module';
 import { ProductPriceModule } from '../product-price/product-price.module';
 import { NgForObjectDirective } from '../directives/ng-for-object.directive';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { NgForObjectDirective } from '../directives/ng-for-object.directive';
     ProductImgModule,
     ProductBrandModule,
     BageModule,
-    ProductPriceModule
+    ProductPriceModule,
+    FontAwesomeModule
   ],
   providers: [
     CatalogService

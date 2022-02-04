@@ -7,6 +7,7 @@ import {NotFoundModule} from "./not-found/not-found.module";
 import {CatalogPageModule} from "./catalog-page/catalog-page.module";
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     NotFoundModule,
     CatalogPageModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   exports: [

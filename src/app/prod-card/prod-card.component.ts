@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { BasketService } from "../services/basket.service";
 
 
@@ -15,6 +16,7 @@ import { BasketService } from "../services/basket.service";
   styles: [`
     .prodcard {
       display: flex;
+      position:relative;
       flex-direction: column;
       align-items: flex-start;
       justify-content: space-around;
@@ -27,7 +29,7 @@ import { BasketService } from "../services/basket.service";
       border-radius: 20px;
       transition: all 0.4s ease;
 
-      &:hover{
+      &:hover {
         transform: scale(1.03);
         transition: all 0.4s ease;
        }
@@ -35,23 +37,8 @@ import { BasketService } from "../services/basket.service";
   ]
 })
 export class ProdCardComponent implements OnInit {
-  // @Input() src?: string = "#";
-  // @Input() name?: string = "Name";
-  // @Input() model?: string = "model";
-  // @Input() cost?: number = 99999;
+
   @Input() id?: number = 0;
-
-  // addToCart($event:any) {
-  //   this.service.addProduct({
-  //     id: this.id,
-  //     cost: this.cost,
-  //     model: this.model,
-  //     count: 1
-  //   })
-  //   $event.stopPropagation();
-  //   console.log($event)
-  // }
-
   constructor(public service:BasketService) { }
   ngOnInit(): void {
   }

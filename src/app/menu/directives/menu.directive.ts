@@ -11,11 +11,9 @@ export class MenuDirective implements AfterViewInit, OnDestroy {
 
   @Input() position:string = 'top'
   @Input('menuDirective') set content (value:any) {
-    console.log(value)
     value.forEach((element:any) => {
       this.contentForRender.push(element)
     });
-    console.log(this.contentForRender)
   }
 
   private componentRef!:ComponentRef<MenuComponent>
@@ -37,7 +35,6 @@ export class MenuDirective implements AfterViewInit, OnDestroy {
       this.componentRef.location.nativeElement.hidden = true
       
     } else {
-      console.log(this.componentRef.location)
       this.componentRef.location.nativeElement.hidden = false
       this.isShow = !this.isShow
     }
@@ -62,6 +59,6 @@ export class MenuDirective implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.componentRef.destroy()
+      // this.componentRef.destroy()
   }
 }
