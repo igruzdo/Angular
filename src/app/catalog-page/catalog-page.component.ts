@@ -18,6 +18,7 @@ import {
   fromEvent,
   Observable,
   pluck,
+  Subject,
   switchMap,
   tap,
   toArray
@@ -135,7 +136,8 @@ export class CatalogPageComponent implements OnInit {
     example_5: 'five',
   }
 
-  public productArr: CatalogResponse;
+  // public productArr: CatalogResponse;
+  public productArr!: CatalogResponse;
   public page: number = 1;
   private queryParams = {}
   private cashArr: any[] = []
@@ -186,7 +188,6 @@ export class CatalogPageComponent implements OnInit {
     })
   }
 
-
   public searchProduct(searchTerm: string): Observable < Array < Product >> {
     this.isSearchStart = true;
     return from(this.productArr.items).pipe(
@@ -196,55 +197,10 @@ export class CatalogPageComponent implements OnInit {
   }
 
   constructor(private service: CatalogService, private rout: ActivatedRoute, private router: Router, public BasketService: BasketService, private favService: FavoriteService) {
-
-
     this.productArr = {
       meta: {},
       items: []
-    }
-    rout.queryParams.subscribe(param => {
-      this.queryParams = {
-        ...this.queryParams,
-        ...param
-      }
-      this.router.navigate(['.'], {
-        relativeTo: this.rout,
-        queryParams: this.queryParams
-      })
-
-      let isChecked = this.cashArr.some(el => el.url === document.location.href)
-
-      if (isChecked) {
-        this.cashArr.forEach(elem => {
-          if (elem.url === document.location.href) {
-            console.log('from cash')
-            this.productArr = elem.response
-          }
-        })
-      } else {
-        this.service.getProducts({
-          ...this.queryParams
-        }).subscribe(value => {
-          this.productArr = value
-
-          this.favService.productsInFavorites$.subscribe(items => {
-            items.forEach(prodinFav => {
-              this.productArr.items.forEach(listProdItem => {
-                if(listProdItem.id == prodinFav.product.id) {
-                  listProdItem.favorit = true
-                }
-              })
-            })
-          })
-
-          this.cashArr.push({
-            url: document.location.href,
-            response: value
-          })
-        })
-        console.log('from api')
-      }
-    })
+    }   
   }
 
   ngOnInit(): void {
@@ -259,6 +215,21 @@ export class CatalogPageComponent implements OnInit {
     )
     this.searchResult$.subscribe(val => {
       this.isResultNull = val.length
+    })
+
+    this.service.subjectProducts$.subscribe(value => {
+      this.productArr = value
+      // console.log(value)
+
+      this.favService.productsInFavorites$.subscribe(items => {
+        items.forEach(prodinFav => {
+          this.productArr.items.forEach(listProdItem => {
+            if(listProdItem.id == prodinFav.product.id) {
+              listProdItem.favorit = true
+            }
+          })
+        })
+      })
     })
   }
 }

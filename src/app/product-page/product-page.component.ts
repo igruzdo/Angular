@@ -91,13 +91,13 @@ export class ProductPageComponent implements OnInit {
 
   constructor(private rout: ActivatedRoute, public service: CatalogService, public BasketService:BasketService) {
     this.params = this.rout.snapshot.queryParams
-    this.service.getProduct(this.params['id']).subscribe(params => {
-      this.itemData = params
-    })
+    
   }
 
   ngOnInit(): void {
-
+    this.service.subjectProduct$.subscribe(params => {  
+      this.itemData = params
+    })
   }
 
 }
