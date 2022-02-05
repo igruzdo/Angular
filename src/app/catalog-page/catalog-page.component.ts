@@ -196,14 +196,20 @@ export class CatalogPageComponent implements OnInit {
     )
   }
 
-  constructor(private service: CatalogService, private rout: ActivatedRoute, private router: Router, public BasketService: BasketService, private favService: FavoriteService) {
-    this.productArr = {
-      meta: {},
-      items: []
-    }   
+  public findFavorits() {
+    this.favService.productsInFavorites$.subscribe(items => {
+      items.forEach(prodinFav => {
+        this.productArr.items.forEach(listProdItem => {
+          if(listProdItem.id == prodinFav.product.id) {
+            listProdItem.favorit = true
+          }
+        })
+      })
+    })
   }
 
-  ngOnInit(): void {
+
+  public search() {
     const search: any = document.querySelector('#search')
 
     this.searchResult$ = fromEvent(search, 'input').pipe(
@@ -213,23 +219,27 @@ export class CatalogPageComponent implements OnInit {
       switchMap((searchTerm: any) => this.searchProduct(searchTerm.toLowerCase())),
       tap(el => console.log(el)),
     )
+
+  }
+
+  constructor(private service: CatalogService, private rout: ActivatedRoute, private router: Router, public BasketService: BasketService, private favService: FavoriteService) {
+    this.productArr = {
+      meta: {},
+      items: []
+    }   
+  }
+
+  ngOnInit(): void {
+
+    this.search()
+
     this.searchResult$.subscribe(val => {
       this.isResultNull = val.length
     })
 
     this.service.subjectProducts$.subscribe(value => {
       this.productArr = value
-      // console.log(value)
-
-      this.favService.productsInFavorites$.subscribe(items => {
-        items.forEach(prodinFav => {
-          this.productArr.items.forEach(listProdItem => {
-            if(listProdItem.id == prodinFav.product.id) {
-              listProdItem.favorit = true
-            }
-          })
-        })
-      })
+      this.findFavorits()
     })
   }
 }
