@@ -50,7 +50,6 @@ export class FavoriteService {
 
   protected updateState():void {
     this.state$.next({...this._state})
-    // console.log(this.state$)
   }
 
   protected createProduct(product: Product):void {
