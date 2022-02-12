@@ -1,17 +1,19 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-button',
   template: `
-    <button [style.background-color]="newColor"
+    <button #tasknote
+    id='forTest'
+    [style.background-color]="newColor"
             [class.active] = "isActive"
             [class.default]="isDefault"
             [class.large]="isLarge"
             [class.small]="isSmall"
-            [style.width]="newSize"
             [attr.disabled] = "isDisabled? '': null"
             [attr.value]="buttonValue"
             *ngIf="buttonValue"
+            data-testid="buttonTest"
     >{{text}}</button>
   `,
   styles: [`
@@ -44,24 +46,14 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
   ]
 })
 export class ButtonComponent implements OnInit, OnChanges{
+  @ViewChild('tasknote') input!: ElementRef;
+
   @Input() text: string = 'Dropdown button';
-  @Input() color: any;
-  @Input() size: any;
-  @Input() isActive = false;
-  @Input() isDisabled = false;
-  @Input() buttonValue: string = 'defaultValue';
-
-  newColor: any;
-  newSize: any;
-  isDefault: boolean = true;
-  isLarge: boolean = false;
-  isSmall: boolean = false;
-
-  ngOnChanges() {
-    if(this.color) {
-      this.newColor = this.colors[this.color]
-    }
-    switch (this.size){
+  @Input() set color (value: string) {
+      this.newColor = this.colors[value]
+  }
+  @Input() set size (value:string) {
+    switch (value){
       case 'default':
         this.isDefault = true;
         this.isLarge = false;
@@ -78,7 +70,20 @@ export class ButtonComponent implements OnInit, OnChanges{
         this.isSmall = true;
         break;
     }
+  }
+  @Input() isActive = false;
+  @Input() isDisabled = false;
+  @Input() buttonValue: string = 'defaultValue';
 
+  newColor: any;
+  isDefault: boolean = true;
+  isLarge: boolean = false;
+  isSmall: boolean = false;
+
+  ngOnChanges() { }
+
+  ngAfterViewInit() {
+    this.input.nativeElement.focus();
   }
 
   public colors: {[index: string]:string} = {

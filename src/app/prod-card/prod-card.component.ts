@@ -10,7 +10,6 @@ import { BasketService } from "../services/basket.service";
     [routerLink]="['/catalog/product']"
     [queryParams]="{id: id}">
       <ng-content></ng-content>
-      <!-- <app-button color="default" text="Добавить в корзину" (click)="addToCart($event)"></app-button> -->
     </div>
   `,
   styles: [`

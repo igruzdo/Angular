@@ -1,37 +1,10 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  CatalogResponse,
-  CatalogService
-} from "../services/catalog.service";
-import {
-  ActivatedRoute,
-  Router
-} from "@angular/router";
-import {
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  from,
-  fromEvent,
-  Observable,
-  pluck,
-  Subject,
-  switchMap,
-  tap,
-  toArray
-} from "rxjs";
-import {
-  Product
-} from "../types/data.types";
-import {
-  BasketService
-} from "../services/basket.service";
-import {
-  faHeart
-} from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit } from '@angular/core';
+import { CatalogResponse, CatalogService } from "../services/catalog.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { debounceTime, distinctUntilChanged, filter, from, fromEvent, Observable, pluck, switchMap, tap, toArray } from "rxjs";
+import { Product } from "../types/data.types";
+import { BasketService } from "../services/basket.service";
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FavoriteService } from '../services/favorite.service';
 
 
@@ -151,8 +124,8 @@ export class CatalogPageComponent implements OnInit {
     }
   }
 
-  addToFavorite($event: any, item:Product) {
-    if(item.favorit) {
+  addToFavorite($event: any, item: Product) {
+    if (item.favorit) {
       item.favorit = false
       this.favService.removeProduct(item)
     } else {
@@ -200,7 +173,7 @@ export class CatalogPageComponent implements OnInit {
     this.favService.productsInFavorites$.subscribe(items => {
       items.forEach(prodinFav => {
         this.productArr.items.forEach(listProdItem => {
-          if(listProdItem.id == prodinFav.product.id) {
+          if (listProdItem.id == prodinFav.product.id) {
             listProdItem.favorit = true
           }
         })
@@ -226,7 +199,7 @@ export class CatalogPageComponent implements OnInit {
     this.productArr = {
       meta: {},
       items: []
-    }   
+    }
   }
 
   ngOnInit(): void {

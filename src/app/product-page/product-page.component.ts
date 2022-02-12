@@ -82,7 +82,6 @@ export class ProductPageComponent implements OnInit {
       count: 1
     })
     $event.stopPropagation();
-    console.log($event)
   }
 
   select(val:any){
@@ -91,7 +90,6 @@ export class ProductPageComponent implements OnInit {
 
   constructor(private rout: ActivatedRoute, public service: CatalogService, public BasketService:BasketService) {
     this.params = this.rout.snapshot.queryParams
-    
   }
 
   ngOnInit(): void {
