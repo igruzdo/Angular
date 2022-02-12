@@ -45,7 +45,6 @@ export class FavoriteService {
     })
 
     this.updateState()
-    console.log(this._state.items)
   }
 
   protected updateState():void {
@@ -58,7 +57,6 @@ export class FavoriteService {
       items:[...this._state.items, {product}]
     }
     this.updateState()
-    console.log(this._state.items)
   }
 
   constructor() { }
