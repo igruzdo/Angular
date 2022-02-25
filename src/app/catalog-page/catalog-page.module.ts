@@ -10,7 +10,11 @@ import { BageModule } from '../bage/bage.module';
 import { ProductPriceModule } from '../product-price/product-price.module';
 import { NgForObjectDirective } from '../directives/ng-for-object.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { StoreModule } from '@ngrx/store';
+import * as fromState from '../store/catalog/reducers'
+import * as fromBasket from '../store/basket/reducers/basket.reduser'
+import { EffectsModule } from '@ngrx/effects';
+import { ProductsEffects } from '../store/catalog/effects';
 
 @NgModule({
     declarations: [
@@ -28,7 +32,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ProductBrandModule,
     BageModule,
     ProductPriceModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    StoreModule.forFeature('catalog', fromState.reducer),
+    StoreModule.forFeature('basket', fromBasket.reducer),
+    EffectsModule.forFeature([ProductsEffects])
   ],
   providers: [
     CatalogService

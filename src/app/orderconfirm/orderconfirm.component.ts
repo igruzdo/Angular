@@ -139,7 +139,6 @@ import {NameMatchValidator} from "../validators/nameMatch.validator";
 export class OrderconfirmComponent implements OnInit {
   @Output() closed: EventEmitter<any> = new EventEmitter;
 
-
   @Input() set previousValue(val: any) {
     this.newValue = JSON.parse(JSON.stringify(val))
     console.log(this.newValue)
@@ -193,7 +192,7 @@ export class OrderconfirmComponent implements OnInit {
       return
     }
     console.log(this.checkoutForm)
-    localStorage.clear()
+    localStorage.removeItem('lastData')
     this.service.clearBasket()
     this.closed.emit(false)
   }

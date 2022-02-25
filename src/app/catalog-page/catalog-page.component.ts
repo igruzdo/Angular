@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogResponse, CatalogService } from "../services/catalog.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { debounceTime, distinctUntilChanged, filter, from, fromEvent, Observable, pluck, switchMap, tap, toArray } from "rxjs";
+import { debounceTime, distinctUntilChanged, filter, from, fromEvent, map, Observable, pluck, switchMap, tap, toArray } from "rxjs";
 import { Product } from "../types/data.types";
-import { BasketService } from "../services/basket.service";
+import { BasketItem, BasketService } from "../services/basket.service";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FavoriteService } from '../services/favorite.service';
+import { select, Store } from '@ngrx/store';
+import * as fromCatalog from './../store/catalog/reducers'
+import * as fromBasket from './../store/basket/reducers/basket.reduser'
+import { ProductSelectors } from '../store/catalog/selectors';
+import { CatalogPageActions } from '../store/catalog/actions';
+import { addToBasket } from '../store/basket/actions/basket.actions';
 
 
 @Component({
@@ -23,10 +29,10 @@ import { FavoriteService } from '../services/favorite.service';
         <app-product-brand brandName="{{item.company}}"></app-product-brand>
         <app-bage modelName="{{item.title}}"></app-bage>
         <app-product-price prodCost="{{item.price}}"></app-product-price>
-        <app-button color="default" text="Добавить в корзину" (click)="addToCart($event, item.id, item.price, item.title)"></app-button>
+        <app-button color="default" text="Добавить в корзину" (click)="addToCart($event, item)"></app-button>
       </app-prod-card>
       <ng-container *ngIf="!isSearchStart">
-        <app-prod-card *ngFor="let item of productArr.items"
+        <app-prod-card *ngFor="let item of productArr?.items"
                        [id]= "item.id">
           <div class="favorite" [ngClass]="{inFavorite: item.favorit}">
             <p>В избранное</p>
@@ -36,7 +42,7 @@ import { FavoriteService } from '../services/favorite.service';
           <app-product-brand brandName="{{item.company}}"></app-product-brand>
           <app-bage modelName="{{item.title}}"></app-bage>
           <app-product-price prodCost="{{item.price}}"></app-product-price>
-          <app-button color="default" text="Добавить в корзину" (click)="addToCart($event, item.id, item.price, item.title)"></app-button>
+          <app-button color="default" text="Добавить в корзину" (click)="addToCart($event, item)"></app-button>
         </app-prod-card>
       </ng-container>
       <ng-container *ngIf = "isResultNull <= 0">
@@ -108,9 +114,9 @@ export class CatalogPageComponent implements OnInit {
     example_4: 'four',
     example_5: 'five',
   }
-
-  // public productArr: CatalogResponse;
-  public productArr!: CatalogResponse;
+  public productArr!: CatalogResponse | null;
+    
+  
   public page: number = 1;
   private queryParams = {}
   private cashArr: any[] = []
@@ -135,19 +141,20 @@ export class CatalogPageComponent implements OnInit {
     $event.stopPropagation();
   }
 
-  addToCart($event: any, id: any, cost: any, model: any) {
-    this.BasketService.addProduct({
-      id: id,
-      cost: cost,
-      model: model,
+  addToCart($event: any, itemIn:any) {
+    let item:BasketItem = {
+      id: itemIn.id,
+      cost: itemIn.price,
+      model: itemIn.title,
       count: 1
-    })
+    }
+    this.storeBasket.dispatch(addToBasket({item}))
     $event.stopPropagation();
   }
 
   showMore() {
 
-    if (this.productArr.meta['currentPage'] == this.productArr.meta['totalPages']) {
+    if (this.productArr?.meta['currentPage'] == this.productArr?.meta['totalPages']) {
       this.page = 1;
     } else {
       this.page++
@@ -163,7 +170,7 @@ export class CatalogPageComponent implements OnInit {
 
   public searchProduct(searchTerm: string): Observable < Array < Product >> {
     this.isSearchStart = true;
-    return from(this.productArr.items).pipe(
+    return from(this.productArr!.items).pipe(
       filter(product => product.title.toLowerCase().indexOf(searchTerm) !== -1),
       toArray()
     )
@@ -172,7 +179,7 @@ export class CatalogPageComponent implements OnInit {
   public findFavorits() {
     this.favService.productsInFavorites$.subscribe(items => {
       items.forEach(prodinFav => {
-        this.productArr.items.forEach(listProdItem => {
+        this.productArr?.items.forEach(listProdItem => {
           if (listProdItem.id == prodinFav.product.id) {
             listProdItem.favorit = true
           }
@@ -195,7 +202,7 @@ export class CatalogPageComponent implements OnInit {
 
   }
 
-  constructor(private service: CatalogService, private rout: ActivatedRoute, private router: Router, public BasketService: BasketService, private favService: FavoriteService) {
+  constructor(private service: CatalogService, private rout: ActivatedRoute, private router: Router, public BasketService: BasketService, private favService: FavoriteService, private store: Store<fromCatalog.State>, private storeBasket: Store<fromBasket.Basket>) {
     this.productArr = {
       meta: {},
       items: []
@@ -210,9 +217,15 @@ export class CatalogPageComponent implements OnInit {
       this.isResultNull = val.length
     })
 
-    this.service.subjectProducts$.subscribe(value => {
-      this.productArr = value
-      this.findFavorits()
-    })
+    // this.service.subjectProducts$.subscribe(value => {
+    //   this.productArr = value
+    //   this.findFavorits()
+    // })
+
+    this.store.dispatch(CatalogPageActions.enter())
+
+    this.store.pipe(
+    select(ProductSelectors.selectProducts),
+    ).subscribe(val => this.productArr = val);
   }
 }

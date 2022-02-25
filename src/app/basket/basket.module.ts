@@ -4,6 +4,10 @@ import {BasketComponent} from "./basket.component";
 import {ButtonModule} from "../button/button.module";
 import {ListModule} from "../list/list.module";
 import {OrderconfirmModule} from "../orderconfirm/orderconfirm.module";
+import { BasketEffects } from '../store/basket/effects/basket.effects';
+import * as fromBasket from '../store/basket/reducers/basket.reduser'
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 
 @NgModule({
@@ -12,7 +16,9 @@ import {OrderconfirmModule} from "../orderconfirm/orderconfirm.module";
     CommonModule,
     ButtonModule,
     ListModule,
-    OrderconfirmModule
+    OrderconfirmModule,
+    StoreModule.forFeature('basket', fromBasket.reducer),
+    EffectsModule.forFeature([BasketEffects])
   ],
   exports: [
     BasketComponent

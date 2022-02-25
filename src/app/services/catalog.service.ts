@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import {DataService} from "./data.service";
 import {HttpService} from "./http.service";
-import {BehaviorSubject, Observable, ReplaySubject, shareReplay, Subject, take, tap} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Product} from "../types/data.types";
 import {HttpParams} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
@@ -65,7 +65,6 @@ export class CatalogService implements OnInit {
       this.products$.forEach(val => {
         this.subjectProducts$.next(val) 
       })
-
       console.log('from api')
     }
   }

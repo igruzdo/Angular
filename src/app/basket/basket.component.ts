@@ -1,5 +1,8 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
+import { Store } from '@ngrx/store';
 import {BasketService} from "../services/basket.service";
+import * as BasketActions from "../store/basket/actions/basket.actions"
+import * as fromBasket from './../store/basket/reducers/basket.reduser'
 
 @Component({
   selector: 'app-basket',
@@ -138,15 +141,15 @@ export class BasketComponent implements OnInit {
     payway: ''
   }
 
-  deleteItemFromCart(val: number) {
-    this.service.removeProduct(val)
+  deleteItemFromCart(id: number) {
+    this.store.dispatch(BasketActions.removeFromBasket({id}))
     if (this.service.cartCount == 0) {
       this.isShow = false;
     }
   }
 
   clearBasket() {
-    this.service.clearBasket()
+    this.store.dispatch(BasketActions.clearBasket())
     this.isShow = false;
   }
 
@@ -182,10 +185,14 @@ export class BasketComponent implements OnInit {
     }
   }
 
-  constructor(public service: BasketService) {
+  constructor(public service: BasketService, private store: Store<fromBasket.Basket> ) {
   }
 
   ngOnInit(): void {
+    // console.log(JSON.parse(localStorage['basket']))
+    this.store.dispatch(BasketActions.initBasket())
+
+    // this.store.subscribe(val => console.log(val))
 
   }
 }
